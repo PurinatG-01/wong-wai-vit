@@ -25,15 +25,26 @@ const theme = createMuiTheme({
         },
 
     },
-    typography:{
+    typography: {
         fontFamily: "Kanit, sans-serif",
         fontWeight: 400,
-        
-    }
+    },
+    overrides: {
+        MuiButton: {
+            root: {
+                fontSize: '1rem',
+                height: 45,
+                width: 163,
+                borderRadius: 32,
+                fontWeight: 200,
+            },
+        },
+    },
+
 })
 
 const MainContainer = styled(Container)`
-    margin-top: 32px;
+    margin-top: 55px;
 `
 
 
@@ -47,14 +58,14 @@ export default function PageLayout(props) {
                 <title>Wongwaivit QC department</title>
                 <link rel="icon" href="/logo_1.svg" />
             </Head>
-            <AppBar style={{ height: 80, boxShadow: "none" }} position="static">
+            <AppBar style={{ height: 87, boxShadow: "none" }} position="static">
                 <Toolbar style={{ height: "100%" }}>
                     <Container style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <Typography variant="h4" style={{  height:"100%", display: "flex", alignItems: "center" }}>
-                        <Logo />
+                        <Typography variant="h4" style={{ height: "100%", display: "flex", alignItems: "center" }}>
+                            <Logo />
                             &nbsp; Wongwaivit QC department
                         </Typography>
-                        <Typography variant="h6" style={{ }}>
+                        <Typography variant="h6" style={{}}>
                             วันที่ {getCurrentDate()}
                         </Typography>
                     </Container>
