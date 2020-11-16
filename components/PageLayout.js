@@ -31,7 +31,6 @@ const MainContainer = styled(Container)`
 
 
 
-
 export default function PageLayout(props) {
     return (
         <MuiThemeProvider theme={theme}>
