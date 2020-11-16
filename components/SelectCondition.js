@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
-import { Button, IconButton, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { THEME } from "./theme"
 import BackButton from "./BackButton"
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
+import ProductTable from './ProductTable'
 
 const SelectConditionWrapper = styled(motion.div)``
 
@@ -34,7 +35,12 @@ const ProductDesWrapper = styled(motion.div)`
 
 
 
-export default function SelectCondition() {
+export default function SelectCondition(props) {
+    const [product, setProduct] = useState({
+        name: "Frozen Yoghurt",
+        id: "136784"
+    })
+
     return (
         <SelectConditionWrapper>
             <TopBar>
@@ -43,11 +49,12 @@ export default function SelectCondition() {
             </TopBar>
             <TableWrapper>
                 <Typography style={{fontSize: 24, color: THEME.black }} color="primary">
-                        รายการ : 
+                        รายการ : {product.name}
                 </Typography>
                 <Typography style={{fontSize: 24, color: THEME.black }} color="primary">
-                        ID : 
+                        ID :  #{product.id}
                 </Typography>
+                <ProductTable />
             </TableWrapper>
         </SelectConditionWrapper>
     )
