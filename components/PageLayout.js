@@ -61,11 +61,11 @@ export default function PageLayout(props) {
             <AppBar style={{ height: 87, boxShadow: "none" }} position="static">
                 <Toolbar style={{ height: "100%" }}>
                     <Container style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <Typography variant="h4" style={{ height: "100%", display: "flex", alignItems: "center" }}>
+                        <Typography  style={{ fontSize: 36,height: "100%", display: "flex", alignItems: "center" }}>
                             <Logo />
                             &nbsp; Wongwaivit QC department
                         </Typography>
-                        <Typography variant="h6" style={{}}>
+                        <Typography  style={{ fontSize: 18}}>
                             วันที่ {getCurrentDate()}
                         </Typography>
                     </Container>

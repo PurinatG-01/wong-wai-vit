@@ -5,7 +5,7 @@ import SelectCondition from "../components/SelectCondition";
 export default function Home() {
   return (
     <PageLayout>
-        
+        <SelectCondition />
     </PageLayout>
   )
 }
