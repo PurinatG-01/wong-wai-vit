@@ -44,13 +44,12 @@ export default function PageLayout(props) {
     return (
         <MuiThemeProvider theme={theme}>
             <Head>
-                <title>Wong wai vit</title>
+                <title>Wongwaivit QC department</title>
+                <link rel="icon" href="/logo_1.svg" />
             </Head>
             <AppBar style={{ height: 80, boxShadow: "none" }} position="static">
                 <Toolbar style={{ height: "100%" }}>
-
                     <Container style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        
                         <Typography variant="h4" style={{  height:"100%", display: "flex", alignItems: "center" }}>
                         <Logo />
                             &nbsp; Wongwaivit QC department
