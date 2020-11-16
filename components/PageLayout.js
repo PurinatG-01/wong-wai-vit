@@ -5,6 +5,8 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import { THEME } from './theme'
 import styled from 'styled-components'
 import { getCurrentDate } from './utils'
+import Logo from "./Logo"
+
 // Scroll App bar
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -22,12 +24,18 @@ const theme = createMuiTheme({
             main: THEME.secondary,
         },
 
+    },
+    typography:{
+        fontFamily: "Kanit, sans-serif",
+        fontWeight: 400,
+        
     }
 })
 
 const MainContainer = styled(Container)`
     margin-top: 32px;
 `
+
 
 
 
@@ -40,11 +48,14 @@ export default function PageLayout(props) {
             </Head>
             <AppBar style={{ height: 80, boxShadow: "none" }} position="static">
                 <Toolbar style={{ height: "100%" }}>
-                    <Container style={{display: "flex", justifyContent: "space-between"}}>
-                        <Typography variant="h4" style={{fontWeight: 800}}>
-                            Wongwaivit QC department
+
+                    <Container style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        
+                        <Typography variant="h4" style={{  height:"100%", display: "flex", alignItems: "center" }}>
+                        <Logo />
+                            &nbsp; Wongwaivit QC department
                         </Typography>
-                        <Typography variant="h6" style={{fontWeight: 800}}>
+                        <Typography variant="h6" style={{ }}>
                             วันที่ {getCurrentDate()}
                         </Typography>
                     </Container>

@@ -6,6 +6,7 @@ export default function Home() {
     
     <PageLayout>
         <Typography color="primary" variant="h6">Landing page</Typography>
+        
     </PageLayout>
   )
 }
