@@ -47,10 +47,6 @@ const MainContainer = styled(Container)`
     margin-top: 55px;
 `
 
-
-
-
-
 export default function PageLayout(props) {
     return (
         <MuiThemeProvider theme={theme}>
