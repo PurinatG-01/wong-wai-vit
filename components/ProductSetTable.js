@@ -32,7 +32,7 @@ export default function ProductTable() {
             field: 'edit', headerName: 'แก้ไข', width: 200, renderCell: (params) => (
                 <IconButton onClick={(e) => {
                     e.stopPropagation();
-                    console.log(params.data.id);
+                    // console.log(params.data.id);
                 }} color="primary"
                 >
                     <BorderColorIcon ></BorderColorIcon>
@@ -44,7 +44,14 @@ export default function ProductTable() {
 
     return (
         <div style={{ height: 400, width: "100%", marginTop: 32 }}>
-            <DataGrid disableSelectionOnClick autoHeight rows={rows} columns={columns} pageSize={5} checkboxSelection onSelectionChange={(el) => { console.log(el) }} />
+            <DataGrid disableSelectionOnClick onCellClick={(el)=>{
+                if(el.field == "edit"){
+                    console.log("Edit click :",el)
+                }else{
+                    console.log("Cell click :",el)
+                }
+        }}
+         autoHeight rows={rows} columns={columns} pageSize={5} checkboxSelection onSelectionChange={(el) => { console.log(el) }} />
         </div>
     )
 }
