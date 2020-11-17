@@ -28,6 +28,9 @@ const theme = createMuiTheme({
     typography: {
         fontFamily: "Kanit, sans-serif",
         fontWeight: 400,
+        h3: {
+            fontSize: 30,
+        },
     },
     overrides: {
         MuiButton: {

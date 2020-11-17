@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import BackButton from "./BackButton"
 import { THEME } from "./theme"
 import FormLine from "./FormLine"
+import {useRouter} from "next/router"
 
 const TopBar = styled(motion.div)`
     display: flex;
@@ -15,6 +16,8 @@ const TopBar = styled(motion.div)`
 `
 
 export default function AddForm() {
+
+    const router = useRouter();
 
     return (
         <>
@@ -29,15 +32,15 @@ export default function AddForm() {
                 <FormLine labelGrid={2} formGrid={10} fieldLabel="ชื่อสินค้า" fieldHelperText="ระบุชื่อสินค้า" />
                 <FormLine labelGrid={2} formGrid={10} fieldLabel="ประเภทสินค้า" fieldHelperText="ระบุประเภทสินค้า" />
                 <FormLine labelGrid={2} formGrid={10} fieldLabel="จำนวนชุด" fieldHelperText="ระบุจำนวนชุด" />
-                <FormLine labelGrid={12} formGrid={12} fieldLabel="คำอธิบายสินค้า" fieldHelperText="ไม่จำเป็นต้องกรอก" extraConfig={{ 'multiline': true, 'rows': '5'}} />
-                <FormLine labelGrid={12} formGrid={12} fieldLabel="หมายเหตุ" fieldHelperText="ไม่จำเป็นต้องกรอก" extraConfig={{ 'multiline': true, 'rows': '5'}} />
+                <FormLine labelGrid={12} formGrid={12} fieldLabel="คำอธิบายสินค้า" fieldHelperText="ไม่จำเป็นต้องกรอก" extraConfig={{ 'multiline': true, 'rows': '5',variant: "outlined"}} />
+                <FormLine labelGrid={12} formGrid={12} fieldLabel="หมายเหตุ" fieldHelperText="ไม่จำเป็นต้องกรอก" extraConfig={{ 'multiline': true, 'rows': '5',variant: "outlined"}} />
             </Grid>
             <Grid style={{marginTop: "30px", marginBottom: "2rem"}}>
                 <Grid container justify="flex-end">
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={()=>{router.back()}}>
                         บันทึก
                     </Button>
-                    <Button variant="contained" color="secondary" style={{marginLeft: "15px"}}>
+                    <Button variant="contained" color="secondary" style={{marginLeft: "15px"}} onClick={()=>{router.back()}}>
                         ยกเลิก
                     </Button>
                 </Grid>
