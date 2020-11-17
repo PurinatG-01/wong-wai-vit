@@ -1,25 +1,22 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
-import { Button, Typography } from '@material-ui/core';
-import { THEME } from "./theme"
 import BackButton from "./BackButton"
+import { THEME } from "./theme"
+import { Button, Typography } from "@material-ui/core"
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
-import ProductTable from './ProductTable'
-import { useRouter } from 'next/router'
-
-
+import {getCurrentDate} from "./utils"
+import ProductSetTable from "./ProductSetTable"
 const TopBar = styled(motion.div)`
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 `
-
 const AddButton = styled(Button)`
-display : flex;
-font-size: 20px;
-justify-content: flex-start;
+    display : flex;
+    font-size: 20px;
+    justify-content: flex-start;
 `
 
 const TableWrapper = styled(motion.div)`
@@ -29,24 +26,18 @@ const TableWrapper = styled(motion.div)`
 `
 
 
-export default function SelectCondition(props) {
-    const router = useRouter();
-    const [product, setProduct] = useState({
-        name: "Frozen Yoghurt",
-        id: "136784"
-    })
-
+export default function SelectConditionForm() {
+    const [product, setProduct] = useState({name: "Something",
+    id: "1234154"})
     return (
         <>
             <TopBar>
-                <BackButton color={THEME.primary} onClick={() => { console.log("Go back!!") }} />
+                <BackButton color={THEME.primary}></BackButton>
                 <AddButton variant="contained" color="primary" onClick={() => {
-                    console.log("Add Record!!");
-                    
+                    console.log("Add!!");
                 }} >
-                    <AddRoundedIcon style={{ fontSize: 32 }} /> <span style={{ marginLeft: 4 }}>เพิ่มตารางบันทึก</span>
+                    <AddRoundedIcon style={{ fontSize: 32 }} /> <span style={{ marginLeft: 4 }}>เพิ่มชุด</span>
                 </AddButton>
-
             </TopBar>
             <TableWrapper>
                 <Typography style={{ fontSize: 24, color: THEME.black }} color="primary">
@@ -55,7 +46,10 @@ export default function SelectCondition(props) {
                 <Typography style={{ fontSize: 24, color: THEME.black }} color="primary">
                     ID :  #{product.id}
                 </Typography>
-                <ProductTable />
+                <Typography style={{ fontSize: 24, color: THEME.black }} color="primary">
+                    วันที่ :  {getCurrentDate()}
+                </Typography>
+                <ProductSetTable />
             </TableWrapper>
         </>
     )

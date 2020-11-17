@@ -37,7 +37,7 @@ const theme = createMuiTheme({
             root: {
                 fontSize: '1rem',
                 height: 45,
-                width: 163,
+                minWidth: 163,
                 borderRadius: 32,
                 fontWeight: 200,
             },

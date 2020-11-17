@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from "styled-components"
 
-const LogoWrapper = styled.div`
+const LogoWrapper = styled.span`
 `
 
 export default function Logo() {

@@ -1,5 +1,5 @@
-import PageLayout from '../components/PageLayout'
-import SelectCondition from '../components/SelectCondition'
+import PageLayout from '../../components/PageLayout'
+import SelectCondition from '../../components/SelectCondition'
 
 
 export default function selectProductCondition() {
