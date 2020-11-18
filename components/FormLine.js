@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 export default function FormLine(props) {
 
-    const {labelGrid, formGrid} = props
+    const {labelGrid, formGrid, onChange} = props
     
     return (
         <>
@@ -12,7 +12,7 @@ export default function FormLine(props) {
                     <Typography variant="h6">{props.fieldLabel} : </Typography>
             </Grid>
             <Grid item xs={formGrid} style={{marginTop: "15px", marginBottom: "15px"}}>
-                    <TextField id="standard-basic" helperText={props.fieldHelperText} fullWidth {...props.extraConfig}  />
+                    <TextField id="standard-basic" helperText={props.fieldHelperText} onChange={(e) => onChange(e)} fullWidth {...props.extraConfig}  />
             </Grid>
         </>
     )

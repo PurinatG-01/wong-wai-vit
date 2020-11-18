@@ -14,15 +14,6 @@ const useStyles = makeStyles({
     }
 });
 
-const defaultState = [
-    { name: "Cheese cake", id: "12346", description: "I am something" },
-    { name: "Cheese cake", id: "12341", description: "I am something" },
-    { name: "Csdfsfdse cake", id: "12342", description: "I am something" },
-    { name: "Cheese cake", id: "12344", description: "I am something" },
-    { name: "Chsdfscake", id: "12345", description: "I am something" },
-    { name: "Cheesesdfsdke", id: "12347", description: "I am something" },
-]
-
 
 const TopBar = styled(motion.div)`
     display: flex;
@@ -36,19 +27,11 @@ font-size: 20px;
 justify-content: flex-start;
 `
 
-export default function GridCard() {
+export default function GridCard({data}) {
 
     const router = useRouter();
-    const [state, setState] = useState(defaultState)
     const classes = useStyles();
-    const getGridCard = () => {
-        return state.map((element) => {
-            return (
-                <Grid key={element.id} item xs={12} sm={6} md={4}>
-                    <Card data={element} onClick={()=>{router.push("/selectProductCondition")}} />
-                </Grid>)
-        })
-    }
+    
 
     return (
         <>
@@ -57,7 +40,11 @@ export default function GridCard() {
                     <AddButton variant="contained" color="primary" onClick={() => { router.push("/addProduct") }} ><AddRoundedIcon style={{fontSize: 32}}/> <span style={{marginLeft: 6}}>เพิ่มรายการ</span></AddButton>
             </TopBar>
             <Grid container spacing={4} className={classes.gridSpace}>
-                {getGridCard()}
+                {data.map((element) => (
+                    <Grid key={element.id} item xs={12} sm={6} md={4}>
+                        <Card data={element} onClick={()=>{router.push("/selectProductCondition")}} />
+                    </Grid>
+                ))}
             </Grid>
         </>
     )
