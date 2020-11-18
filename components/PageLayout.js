@@ -65,7 +65,7 @@ export default function PageLayout(props) {
                             &nbsp; Wongwaivit QC department
                         </Typography>
                         <Typography  style={{ fontSize: 18}}>
-                            วันที่ {getCurrentDate()}
+                            วันที่ {getCurrentDate().formalDate}
                         </Typography>
                     </Container>
                 </Toolbar>

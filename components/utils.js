@@ -7,8 +7,10 @@ export function getCurrentDate() {
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
 
-    today = dd + '/' + mm + '/' + yyyy;
-    return today
+    const date = new Date(`${yyyy}-${mm}-${dd}`)
+    const formalDate = dd+"/"+mm+"/"+yyyy
+    
+    return {dd, mm , yyyy, date, formalDate }
 }
 
 
@@ -23,4 +25,11 @@ export function tester(){
 
 export default function teste1r(){
     return "sdfhskdfh;sd"
+}
+
+export const extractData = (element, data ,setFunc)=>{
+
+    const id = element.target.id
+    const value = element.target.value
+    setFunc({ ...data , [id] : value})
 }
