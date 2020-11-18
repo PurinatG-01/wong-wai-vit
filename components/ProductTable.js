@@ -19,7 +19,9 @@ const rows = [
 ];
 
 
-export default function ProductTable() {
+export default function ProductTable(props) {
+
+    const { onChange } = props;
     const router = useRouter();
     const columns = [
         { field: 'id', headerName: 'ไอดี', width: 200 },
@@ -33,13 +35,19 @@ export default function ProductTable() {
 
     return (
         <div style={{ height: 400, width: "100%", marginTop: 32 }}>
-            <DataGrid disableSelectionOnClick onCellClick={(el) => {
-
-                router.push({ pathname: "/selectProductCondition/condition", query: { ...el.data, method: "edit" } })
-
-
-            }}
-                autoHeight rows={rows} columns={columns} pageSize={5} checkboxSelection onSelectionChange={(el) => { console.log(el) }} />
+            <DataGrid
+                disableSelectionOnClick
+                onCellClick={(el) => {
+                    router.push({ pathname: "/selectProductCondition/condition", query: { ...el.data, method: "edit" } })
+                }}
+                autoHeight rows={rows}
+                columns={columns}
+                pageSize={5}
+                checkboxSelection
+                onSelectionChange={(el) => {
+                    onChange(el);
+                }}
+            />
         </div>
     )
 }

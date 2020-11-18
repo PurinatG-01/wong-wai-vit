@@ -32,14 +32,13 @@ export default function ProductTable() {
             field: 'edit', headerName: 'แก้ไข', width: 200, renderCell: (params) => (
                 <IconButton onClick={(e) => {
                     e.stopPropagation();
-                    // console.log(params.data.id);
                 }} color="primary"
                 >
                     <BorderColorIcon ></BorderColorIcon>
                 </IconButton>
             )
-        },
-    ];
+        },]
+    
 
 
     return (
