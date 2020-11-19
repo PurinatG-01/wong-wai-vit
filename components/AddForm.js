@@ -66,7 +66,6 @@ export default function AddForm() {
     };
 
     const validateField = (field) => {
-        console.log(state[field])
         !state[field] ? setErrorState(prev => ({...prev, [field]: true})) : setErrorState(prev => ({...prev, [field]: false}))
     }
     
