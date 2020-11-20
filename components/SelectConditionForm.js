@@ -47,7 +47,7 @@ export default function SelectConditionForm() {
                     ID :  #{product.id}
                 </Typography>
                 <Typography style={{ fontSize: 24, color: THEME.black }} color="primary">
-                    วันที่ :  {getCurrentDate()}
+                    วันที่ :  {getCurrentDate().formalDate}
                 </Typography>
                 <ProductSetTable />
             </TableWrapper>

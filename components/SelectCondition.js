@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
 import { IconButton, Button, Typography, TextField, makeStyles, Dialog, DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
 import { THEME } from "./theme"
 import BackButton from "./BackButton"
@@ -21,7 +20,7 @@ const useStyles = makeStyles({
     }
 })
 
-const TopBar = styled(motion.div)`
+const TopBar = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,22 +33,22 @@ font-size: 20px;
 justify-content: flex-start;
 `
 
-const TableWrapper = styled(motion.div)`
+const TableWrapper = styled.div`
     margin-top: 70px;
     width: 100%;
     height: 500px;
 `
 
-const TitleWrapper = styled(motion.div)`
+const TitleWrapper = styled.div`
 
 `
 
-const DateWrapper = styled(motion.div)`
+const DateWrapper = styled.div`
 display: flex;
 align-items: center;
 justify-content: space-around;
 `
-const InfoWrapper = styled(motion.div)`
+const InfoWrapper = styled.div`
 display:flex;
 justify-content: space-between;
 `
@@ -68,7 +67,16 @@ const SelectedAlert = styled(Alert)`
 }
 `
 
-const default_data = [
+
+
+const getProductTable = (data, setSelectedData) => {
+    return (<ProductTable data={data} onChange={(data) => { setSelectedData(data) }} />)
+}
+
+
+export default function SelectCondition(props) {
+
+    const default_data = [
     { id: 1, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 },
     { id: 2, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 },
     { id: 3, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 },
@@ -82,26 +90,24 @@ const default_data = [
 
 
 
-export default function SelectCondition(props) {
+
+    const { product } = props
     const classes = useStyles();
     const router = useRouter();
     const [dialogOpen, setDialogOpen] = useState(false);
-    const [selectedData, setSelectedData] = useState({ rowIds: [] })
+    const [selectedData, setSelectedData] = useState({ rows: [] })
     const [data, setData] = useState(default_data)
     const [displayData, setDisplayData] = useState(data)
-    const [product, setProduct] = useState({
-        name: "Frozen Yoghurt",
-        id: "136784"
-    })
-
     const [filterDate, setFilterDate] = useState({
         begin_date: null,
         end_date: null
     })
 
+
     useEffect(() => {
         let begin_date
         let end_date
+        let temp_data = data
         let result = []
         if (filterDate.begin_date) {
             begin_date = new Date(filterDate.begin_date)
@@ -109,30 +115,29 @@ export default function SelectCondition(props) {
         if (filterDate.end_date) {
             end_date = new Date(filterDate.end_date)
         }
-
-
-        data.forEach(element => {
-            console.log(element.date)
-            const current_date = new Date(element.date)
-            console.log("current_date> ",current_date)
-            console.log("begin_date> ",begin_date)
-            console.log("end_date> ",end_date)
-
-            if(current_date > undefined || current_date < end_date){
-                console.log("yes")
+        // console.log("> begin_date :", begin_date)
+        // console.log("> end_date : ", end_date)
+        result = temp_data.filter((e) => {
+            const current_date = new Date(e.date)
+            if (begin_date == undefined && !(end_date == undefined)) {
+                return current_date <= end_date
+            } else if (!(begin_date == undefined) && end_date == undefined) {
+                return current_date >= begin_date
+            } else if (!(begin_date == undefined) && !(end_date == undefined)) {
+                return (current_date <= end_date && current_date >= begin_date)
+            } else {
+                return true
             }
+        })
+        console.log("result : ", result)
+        setDisplayData(result)
 
-            console.log(result)
-            
-        });
-        
-        
 
     }, [filterDate])
 
-    console.log(filterDate)
 
-    console.log(displayData)
+
+
     return (
         <>
             <TopBar>
@@ -149,10 +154,10 @@ export default function SelectCondition(props) {
                 <InfoWrapper>
                     <TitleWrapper>
                         <Typography style={{ fontSize: 24, color: THEME.black }} color="primary">
-                            รายการ : {product.name}
+                            รายการ : {product?.name}
                         </Typography>
                         <Typography style={{ fontSize: 24, color: THEME.black }} color="primary">
-                            ID :  #{product.id}
+                            ID :  #{product?.id}
                         </Typography>
                     </TitleWrapper>
                     <DateWrapper>
@@ -183,23 +188,23 @@ export default function SelectCondition(props) {
                             value={filterDate.end_date ?? ""}
                             onChange={(e) => { extractData(e, filterDate, setFilterDate) }}
                         />
-                        <Button onClick={()=>{setFilterDate({begin_date: null, end_date: null})}} style={{marginLeft: 20}}color="primary" variant="contained" >รีเซ็ต</Button>
+                        <Button onClick={() => { setFilterDate({ begin_date: null, end_date: null }) }} style={{ marginLeft: 20 }} color="primary" variant="contained" >รีเซ็ต</Button>
                     </DateWrapper>
 
                 </InfoWrapper>
 
                 {/* Select to delete message */}
-                {selectedData.rowIds?.length == 0 ? <></> :
+                {selectedData.rows?.length == 0 ? <></> :
                     <SelectedAlert InputProps={{ message: classes.message }} icon={false} severity="error" style={{ marginTop: 20 }}>
-                        <div>{selectedData?.rowIds?.length}&nbsp; รายการที่เลือกอยู่</div>
+                        <div>{selectedData?.rows?.length}&nbsp; รายการที่เลือกอยู่</div>
                         <IconButton onClick={() => { console.log("Attempt delete record on selected row") }}>
                             <DeleteOutlinedIcon color="error" />
                         </IconButton>
                     </SelectedAlert>
                 }
-
                 {/* Table display record of the QC */}
-                <ProductTable data={displayData} onChange={(data) => { setSelectedData(data) }} />
+                {console.log( "> hey check!! : ", (displayData == undefined) )}
+                {getProductTable(displayData, setSelectedData)}
 
                 {/* Add data dialog */}
                 <Dialog

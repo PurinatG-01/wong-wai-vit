@@ -19,26 +19,29 @@ export default function ProductTable(props) {
 
     const { onChange, data } = props;
     const router = useRouter();
-    
 
 
-    return (
-        <div style={{ height: 400, width: "100%", marginTop: 32 }}>
-            <DataGrid
-                disableSelectionOnClick
-                onCellClick={(el) => {
+    return (<>
+        { (data == []) ? <></> :
+            <div style={{ height: 400, width: "100%", marginTop: 32 }}>
+                <DataGrid
+                    disableSelectionOnClick
+                    onCellClick={(el) => {
                     router.push({ pathname: "/selectProductCondition/condition", query: { ...el.data, method: "edit" } })
                 }}
-                autoHeight 
-                rows={data}
-                columns={columns}
-                pageSize={5}
-                checkboxSelection
-                onSelectionChange={(el) => {
-                    onChange(el);
-                }}
-                
-            />
-        </div>
+                    autoHeight
+                    rows={data}
+                    
+                    columns={columns}
+                    pageSize={5}
+                    checkboxSelection
+                    onSelectionChange={(el) => {
+                        onChange(el);
+                    }}
+
+                />
+            </div>
+        }
+    </>
     )
 }
