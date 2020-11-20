@@ -103,7 +103,7 @@ export default function SimpleCard(props) {
                         {data.description}
                     </Typography>
                     <Grid container justify="flex-end">
-                        <IconButton IconButton color="primary" aria-label="edit" onClick={(e) => { e.stopPropagation();router.push("/addProduct") }}>
+                        <IconButton IconButton color="primary" aria-label="edit" onClick={(e) => { e.stopPropagation();router.push({ pathname: "/editProduct/"+data.id, }) }}>
                             <EditRoundedIcon />
                         </IconButton>
                         <IconButton className={button.mySvgStyle} aria-label="delete" onClick={(e) => { e.stopPropagation();setOpen(true);setSelectedItem(data) }}>
