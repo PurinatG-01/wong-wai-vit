@@ -1,11 +1,11 @@
 import PageLayout from '../../components/PageLayout'
-import SelectCondition from '../../components/SelectCondition'
+import Product from '../../components/Product'
 
 
 export default function selectProductCondition() {
     return (
         <PageLayout>
-            <SelectCondition />
+            <Product />
         </PageLayout>
     )
 }

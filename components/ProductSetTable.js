@@ -46,11 +46,10 @@ export default function ProductTable() {
             <DataGrid disableSelectionOnClick onCellClick={(el)=>{
                 if(el.field == "edit"){
                     console.log("Edit click :",el)
-                }else{
-                    console.log("Cell click :",el)
+                    router.push({pathname:"/selectProductCondition/record",query:{ method: "edit"}})
                 }
         }}
-         autoHeight rows={rows} columns={columns} pageSize={5} checkboxSelection onSelectionChange={(el) => { console.log(el) }} />
+         autoHeight rows={rows} columns={columns} pageSize={5} onSelectionChange={(el) => { console.log(el) }} />
         </div>
     )
 }

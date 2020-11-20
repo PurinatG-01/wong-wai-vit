@@ -129,7 +129,6 @@ export default function SelectCondition(props) {
                 return true
             }
         })
-        console.log("result : ", result)
         setDisplayData(result)
 
 
@@ -203,7 +202,6 @@ export default function SelectCondition(props) {
                     </SelectedAlert>
                 }
                 {/* Table display record of the QC */}
-                {console.log( "> hey check!! : ", (displayData == undefined) )}
                 {getProductTable(displayData, setSelectedData)}
 
                 {/* Add data dialog */}
@@ -213,11 +211,10 @@ export default function SelectCondition(props) {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">คุณต้องการที่จะเพิ่มตารางบันทึกใช่หรือไม่?</DialogTitle>
                     <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Let Google help apps determine location. This means sending anonymous location data to
-                            Google, even when no apps are running.
+                        <DialogContentText id="Adding Record">
+                            เพิ่มตารางบันทึก
                         </DialogContentText>
                     </DialogContent>
                 </Dialog>
