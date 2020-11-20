@@ -77,15 +77,15 @@ const getProductTable = (data, setSelectedData) => {
 export default function SelectCondition(props) {
 
     const default_data = [
-    { id: 1, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 },
-    { id: 2, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 },
-    { id: 3, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 },
-    { id: 4, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 },
-    { id: 5, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 },
-    { id: 6, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 },
-    { id: 7, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 },
-    { id: 8, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 },
-    { id: 9, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 },
+    { id: 1, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 2, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 3, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 4, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 5, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 6, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 7, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 8, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 9, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
 ];
 
 

@@ -29,12 +29,15 @@ const TableWrapper = styled(motion.div)`
 
 
 export default function SelectConditionForm() {
-    const [product, setProduct] = useState({
-        name: "Something",
-        id: "1234154"
-    })
+    
 
     const router = useRouter();
+    const query = router.query;
+    const [product, setProduct] = useState({
+        name: "Something",
+        id: query.id ?? ""
+    })
+    console.log("> query : ", query)
     return (
         <>
             <TopBar>

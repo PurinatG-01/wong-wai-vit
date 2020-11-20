@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Button ,Radio, RadioGroup, FormControlLabel, FormControl, TextField, Typography } from "@material-ui/core"
 import styled from "styled-components"
-
+import {useRouter} from "next/router"
 const FormWrapper = styled.div`
 width: 100%;
 margin-top: 32px;
@@ -49,6 +49,11 @@ display: flex;
 `
 
 export default function SelectConditionForm() {
+
+    const [state,setState] = useState({})
+
+    const router = useRouter()
+
     return (
         <FormWrapper>
             <form onSubmit={(el) => {
@@ -224,7 +229,7 @@ export default function SelectConditionForm() {
                             <Button type="submit" variant="contained" color="primary">
                                 บันทึก
                             </Button>
-                            <Button style={{marginLeft: 12}}color="error">
+                            <Button style={{marginLeft: 12}} color="error" onClick={()=>{router.back()}}>
                                 ยกเลิก
                             </Button>
                         
