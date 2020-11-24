@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 
 const columns = [
     { field: 'id', headerName: 'ไอดี', width: 100 },
-    { field: 'date', headerName: 'วันที่', width: 150 },
+    { field: 'formal_date', headerName: 'วันที่', width: 150 },
     { field: 'total_set', headerName: 'จำนวนชุด', width: 150 },
     { field: 'total_ok', headerName: 'ของที่ใช้ได้ทั้งหมด', width: 150 },
     { field: 'total_ng', headerName: 'ของเสียทั้งหมด', width: 150 },
@@ -19,7 +19,7 @@ const columns = [
 ];
 
 export default function ProductTable(props) {
-
+    const { product } = props 
     const { onChange, data } = props;
     const router = useRouter();
 
@@ -30,7 +30,7 @@ export default function ProductTable(props) {
                 <DataGrid
                     disableSelectionOnClick
                     onCellClick={(el) => {
-                    router.push({ pathname: "/selectProductCondition/condition", query: { ...el.data, method: "edit" } })
+                    router.push({ pathname: "/selectProductCondition/condition", query: { ...el.data, name: product?.name, pid: product?.id, method: "edit" } })
                 }}
                     autoHeight
                     rows={data}

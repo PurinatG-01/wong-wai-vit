@@ -42,7 +42,16 @@ export default function GridCard({data}) {
             <Grid container spacing={4} className={classes.gridSpace}>
                 {data.map((element) => (
                     <Grid key={element.id} item xs={12} sm={6} md={4}>
-                        <Card data={element} onClick={()=>{router.push("/selectProductCondition")}} />
+                        <Card data={element} onClick={()=>{
+                            console.log(element);
+                            router.push(
+                                {pathname: "/selectProductCondition", 
+                                query:{
+                                    name:element?.name,
+                                    id: element?.id,
+                            }})
+
+                        }} />
                     </Grid>
                 ))}
             </Grid>

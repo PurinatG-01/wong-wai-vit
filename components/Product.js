@@ -69,31 +69,29 @@ const SelectedAlert = styled(Alert)`
 
 
 
-const getProductTable = (data, setSelectedData) => {
-    return (<ProductTable data={data} onChange={(data) => { setSelectedData(data) }} />)
-}
 
 
 export default function SelectCondition(props) {
 
     const default_data = [
-    { id: 1, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
-    { id: 2, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
-    { id: 3, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
-    { id: 4, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
-    { id: 5, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
-    { id: 6, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
-    { id: 7, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
-    { id: 8, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
-    { id: 9, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 1, formal_date: getCurrentDate().formalDate,date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 2, formal_date: getCurrentDate().formalDate,date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 3, formal_date: getCurrentDate().formalDate,date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 4, formal_date: getCurrentDate().formalDate,date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 5, formal_date: getCurrentDate().formalDate,date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 6, formal_date: getCurrentDate().formalDate,date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 7, formal_date: getCurrentDate().formalDate,date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 8, formal_date: getCurrentDate().formalDate,date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
+    { id: 9, formal_date: getCurrentDate().formalDate,date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10 , renew: 3, resend: 2, wrong_shape: 5},
 ];
 
 
 
 
-    const { product } = props
+    
     const classes = useStyles();
     const router = useRouter();
+    const query = router.query;
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedData, setSelectedData] = useState({ rows: [] })
     const [data, setData] = useState(default_data)
@@ -153,10 +151,10 @@ export default function SelectCondition(props) {
                 <InfoWrapper>
                     <TitleWrapper>
                         <Typography style={{ fontSize: 24, color: THEME.black }} color="primary">
-                            รายการ : {product?.name}
+                            รายการ : {query?.name}
                         </Typography>
                         <Typography style={{ fontSize: 24, color: THEME.black }} color="primary">
-                            ID :  #{product?.id}
+                            ID :  #{query?.id}
                         </Typography>
                     </TitleWrapper>
                     <DateWrapper>
@@ -202,7 +200,7 @@ export default function SelectCondition(props) {
                     </SelectedAlert>
                 }
                 {/* Table display record of the QC */}
-                {getProductTable(displayData, setSelectedData)}
+                <ProductTable product={query} data={displayData} onChange={(data) => { setSelectedData(data) }} />
 
                 {/* Add data dialog */}
                 <Dialog

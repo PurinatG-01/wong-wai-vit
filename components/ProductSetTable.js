@@ -23,7 +23,7 @@ export default function ProductTable() {
     const router = useRouter();
     const columns = [
         { field: 'id', headerName: 'ชุดที่', width: 100 },
-        { field: 'per_set', headerName: 'จำนวนต่อชุด', width: 100 },
+        { field: 'per_set', headerName: 'จำนวนต่อชุด', width: 120 },
         { field: 'machine', headerName: 'บ่อชุบ', width: 100 },
 
         { field: 'line_id', headerName: 'เลขไลน์', width: 100 },

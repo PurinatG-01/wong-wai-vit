@@ -33,11 +33,7 @@ export default function SelectConditionForm() {
 
     const router = useRouter();
     const query = router.query;
-    const [product, setProduct] = useState({
-        name: "Something",
-        id: query.id ?? ""
-    })
-    console.log("> query : ", query)
+
     return (
         <>
             <TopBar>
@@ -51,13 +47,13 @@ export default function SelectConditionForm() {
             </TopBar>
             <TableWrapper>
                 <Typography style={{ fontSize: 24, color: THEME.black }} color="primary">
-                    รายการ : {product.name}
+                    รายการ : {query?.name}
                 </Typography>
                 <Typography style={{ fontSize: 24, color: THEME.black }} color="primary">
-                    ID :  #{product.id}
+                    ID :  #{query?.pid}
                 </Typography>
                 <Typography style={{ fontSize: 24, color: THEME.black }} color="primary">
-                    วันที่ :  {getCurrentDate().formalDate}
+                    วันที่ :  {query?.formal_date}
                 </Typography>
                 <ProductSetTable />
             </TableWrapper>
