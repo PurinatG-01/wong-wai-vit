@@ -7,20 +7,21 @@ import { useRouter } from 'next/router'
 
 
 const rows = [
-    { id: 1, per_set: 8, machine: "SA",line_id : 2, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10.42" },
-    { id: 2, per_set: 8, machine: "SA",line_id : 2, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10.42" },
-    { id: 3, per_set: 8, machine: "SA",line_id : 2, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10.42" },
-    { id: 4, per_set: 8, machine: "SA",line_id : 2, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10.42" },
-    { id: 5, per_set: 8, machine: "SA",line_id : 2, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10.42" },
-    { id: 6, per_set: 8, machine: "SA",line_id : 2, bar_id: 11462, ok: 7, ng: 1,  renew: 4, resend: 8, wrong_shape: 7,time: "10.42" },
-    { id: 7, per_set: 8, machine: "SA",line_id : 2, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10.42" },
-    { id: 8, per_set: 8, machine: "SA",line_id : 2, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10.42" },
-    { id: 9, per_set: 8, machine: "SA",line_id : 2, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10.42" },
+    { id: 1, per_set: 8, machine: "SA",line_id : 2, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10:42" },
+    { id: 2, per_set: 8, machine: "SB",line_id : 2, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10:42" },
+    { id: 3, per_set: 8, machine: "B1",line_id : 3, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10:42" },
+    { id: 4, per_set: 8, machine: "B2",line_id : 2, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10:42" },
+    { id: 5, per_set: 8, machine: "SA",line_id : 3, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10:42" },
+    { id: 6, per_set: 8, machine: "SA",line_id : 3, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7,time: "10:42" },
+    { id: 7, per_set: 8, machine: "SA",line_id : 2, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10:42" },
+    { id: 8, per_set: 8, machine: "SA",line_id : 3, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10:42" },
+    { id: 9, per_set: 8, machine: "SA",line_id : 2, bar_id: 11462, ok: 7, ng: 1, renew: 4, resend: 8, wrong_shape: 7, time: "10:42" },
 ];
 
 
 export default function ProductTable() {
     const router = useRouter();
+    const query = router.query;
     const columns = [
         { field: 'id', headerName: 'ชุดที่', width: 100 },
         { field: 'per_set', headerName: 'จำนวนต่อชุด', width: 120 },
@@ -56,8 +57,8 @@ export default function ProductTable() {
         <div style={{ height: 400, width: "100%", marginTop: 32 }}>
             <DataGrid disableSelectionOnClick onCellClick={(el)=>{
                 if(el.field == "edit"){
-                    console.log("Edit click :",el)
-                    router.push({pathname:"/selectProductCondition/record",query:{ method: "edit"}})
+                    const data = el.data
+                    router.push({pathname:"/selectProductCondition/record",query:{ ...data ,name : query.name,  pid: query.pid, formal_date: query.formal_date ,method: "edit"}})
                 }
         }}
          autoHeight 

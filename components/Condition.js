@@ -30,7 +30,6 @@ const TableWrapper = styled(motion.div)`
 
 export default function SelectConditionForm() {
     
-
     const router = useRouter();
     const query = router.query;
 
@@ -40,7 +39,7 @@ export default function SelectConditionForm() {
                 <BackButton color={THEME.primary}></BackButton>
                 <AddButton variant="contained" color="primary" onClick={() => {
                     console.log("Add!!");
-                    router.push({ pathname: "/selectProductCondition/record", query: { method: "add" } })
+                    router.push({ pathname: "/selectProductCondition/record", query: { pid: query.pid, name: query.name, formal_date: query.formal_date ,method: "add" } })
                 }} >
                     <AddRoundedIcon style={{ fontSize: 32 }} /> <span style={{ marginLeft: 4 }}>เพิ่มชุด</span>
                 </AddButton>
