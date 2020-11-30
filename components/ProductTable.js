@@ -7,15 +7,14 @@ import { useRouter } from 'next/router'
 
 
 const columns = [
-    { field: 'id', headerName: 'ไอดี', width: 100 },
-    { field: 'formal_date', headerName: 'วันที่', width: 150 },
-    { field: 'total_set', headerName: 'จำนวนชุด', width: 150 },
-    { field: 'total_ok', headerName: 'ของที่ใช้ได้ทั้งหมด', width: 150 },
-    { field: 'total_ng', headerName: 'ของเสียทั้งหมด', width: 150 },
-    { field: 'renew', headerName: 'ล้างชุบใหม่', width: 120 },
-    { field: 'resend', headerName: 'ล้างส่งคืน', width: 120 },
-    { field: 'wrong_shape', headerName: 'งานผิดรูป', width: 120 },
-    { field: 'total', headerName: 'ของทั้งหมด', width: 120 },
+    // { field: 'id', headerName: 'ไอดี', width: 100 },
+    { field: 'qc_date', headerName: 'วันที่', width: 150 },
+    { field: 'qc_total_set', headerName: 'จำนวนชุด', width: 150 },
+    { field: 'qc_total_ok', headerName: 'ของที่ใช้ได้ทั้งหมด', width: 150 },
+    { field: 'qc_total_ng', headerName: 'ของเสียทั้งหมด', width: 150 },
+    { field: 'qc_ng_renew', headerName: 'ล้างชุบใหม่', width: 120 },
+    { field: 'qc_ng_resend', headerName: 'ล้างส่งคืน', width: 120 },
+    { field: 'qc_blended_frame', headerName: 'งานผิดรูป', width: 120 },
 ];
 
 export default function ProductTable(props) {
@@ -30,7 +29,7 @@ export default function ProductTable(props) {
                 <DataGrid
                     disableSelectionOnClick
                     onCellClick={(el) => {
-                    router.push({ pathname: "/selectProductCondition/condition", query: { ...el.data, name: product?.name, pid: product?.id, method: "edit" } })
+                    router.push({ pathname: "/selectProductCondition/condition", query: { ...el.data, name: product?.name, pid: product?.pid, method: "edit" } })
                 }}
                     autoHeight
                     rows={data}
