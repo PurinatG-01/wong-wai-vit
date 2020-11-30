@@ -19,7 +19,8 @@ export async function getStaticProps() {
   let xproducts = []
   await db.collection("products").get().then((query) => {
       query.forEach((doc) => {
-          xproducts.push(doc.data())
+          xproducts.push(doc.data()) //get document datas (all fields data)
+          console.log(doc.id) //get document id
       })
   })
 
