@@ -33,8 +33,7 @@ const defaultErrorState =
     {
         id: false,
         name: false,
-        category: false,
-        batchamount: false
+        customer: false,
     }
 
 export default function EditForm(props) {
@@ -46,16 +45,14 @@ export default function EditForm(props) {
     const [state, setState] = useState({
         id: productData[0].id,
         name: productData[0].name,
-        category: productData[0].category,
-        batchamount: productData[0].batchamount,
+        customer: productData[0].customer,
         description: productData[0].description,
-        note: productData[0].note
     })
     const [originalId, setOriginalId] = useState({id: productData[0].id})
     const [open, setOpen] = useState(false);
     const [errorState, setErrorState] = useState(defaultErrorState);
     const classes = useStyles();
-    const idInput = React.createRef(), nameInput = React.createRef(), categoryInput = React.createRef(), batchAmountInput = React.createRef();
+    const idInput = React.createRef(), nameInput = React.createRef(), customerInput = React.createRef(), batchAmountInput = React.createRef();
 
     const handleOpen = () => {
         setOpen(true);
@@ -73,12 +70,11 @@ export default function EditForm(props) {
     }
     
     const validateSubmitForm = () => {
-        if(!state.batchamount) { setErrorState(prev => ({...prev, batchamount: true})); batchAmountInput.current.focus() } else { setErrorState(prev => ({...prev, batchamount: false})) }
-        if(!state.category) { setErrorState(prev => ({...prev, category: true})); categoryInput.current.focus() } else { setErrorState(prev => ({...prev, category: false})) }
+        if(!state.customer) { setErrorState(prev => ({...prev, customer: true})); customerInput.current.focus() } else { setErrorState(prev => ({...prev, customer: false})) }
         if(!state.name) { setErrorState(prev => ({...prev, name: true})); nameInput.current.focus() } else { setErrorState(prev => ({...prev, name: false})) }
         if(!state.id) { setErrorState(prev => ({...prev, id: true})); idInput.current.focus() } else { setErrorState(prev => ({...prev, id: false})) }
         console.log(errorState)
-        if(state.id && state.name && state.category && state.batchamount) return true
+        if(state.id && state.name && state.customer) return true
         return false
     }
 
@@ -115,10 +111,8 @@ export default function EditForm(props) {
             <Grid container spacing={3} style={{marginTop: "20px"}}>
                 <FormLine inputRef={idInput} error={errorState.id} labelGrid={2} formGrid={10} fieldLabel="ID สินค้า" fieldHelperText="ระบุรหัสสินค้า" value={state.id} onChange={(e) => {setState({...state, id: e.target.value});validateField("id");}} extraConfig={{'value': state.id}} />
                 <FormLine inputRef={nameInput} error={errorState.name} labelGrid={2} formGrid={10} fieldLabel="ชื่อสินค้า" fieldHelperText="ระบุชื่อสินค้า" value={state.name} onChange={(e) => {setState({...state, name: e.target.value});validateField("name");}} extraConfig={{'value': state.name}} />
-                <FormLine inputRef={categoryInput} error={errorState.category} labelGrid={2} formGrid={10} fieldLabel="ประเภทสินค้า" fieldHelperText="ระบุประเภทสินค้า" value={state.category} onChange={(e) => {setState({...state, category: e.target.value});validateField("category");}} extraConfig={{'value': state.category}} />
-                <FormLine inputRef={batchAmountInput} error={errorState.batchamount} labelGrid={2} formGrid={10} fieldLabel="จำนวนชุด" fieldHelperText="ระบุจำนวนชุด" value={state.batchamount} onChange={(e) => {setState({...state, batchamount: e.target.value});validateField("batchamount");}} extraConfig={{'value': state.batchamount}} />
+                <FormLine inputRef={customerInput} error={errorState.customer} labelGrid={2} formGrid={10} fieldLabel="ชื่อลูกค้า" fieldHelperText="ระบุชื่อลูกค้า" value={state.customer} onChange={(e) => {setState({...state, customer: e.target.value});validateField("customer");}} extraConfig={{'value': state.customer}} />
                 <FormLine labelGrid={12} formGrid={12} fieldLabel="คำอธิบายสินค้า" fieldHelperText="ไม่จำเป็นต้องกรอก" value={state.description} onChange={(e) => setState({...state, description: e.target.value})} extraConfig={{ 'multiline': true, 'rows': '5',variant: "outlined",'value': state.description}} />
-                <FormLine labelGrid={12} formGrid={12} fieldLabel="หมายเหตุ" fieldHelperText="ไม่จำเป็นต้องกรอก" value={state.note} onChange={(e) => setState({...state, note: e.target.value})} extraConfig={{ 'multiline': true, 'rows': '5',variant: "outlined", 'value': state.note}} />
             </Grid>
             <Grid style={{marginTop: "30px", marginBottom: "2rem"}}>
                 <Grid container justify="flex-end">
