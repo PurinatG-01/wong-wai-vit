@@ -72,26 +72,7 @@ const SelectedAlert = styled(Alert)`
 const db = Firebase.firestore()
 
 
-
-
-
-
 export default function SelectCondition(props) {
-
-    const default_data = [
-        { id: 1, formal_date: getCurrentDate().formalDate, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10, renew: 3, resend: 2, wrong_shape: 5 },
-        { id: 2, formal_date: getCurrentDate().formalDate, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10, renew: 3, resend: 2, wrong_shape: 5 },
-        { id: 3, formal_date: getCurrentDate().formalDate, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10, renew: 3, resend: 2, wrong_shape: 5 },
-        { id: 4, formal_date: getCurrentDate().formalDate, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10, renew: 3, resend: 2, wrong_shape: 5 },
-        { id: 5, formal_date: getCurrentDate().formalDate, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10, renew: 3, resend: 2, wrong_shape: 5 },
-        { id: 6, formal_date: getCurrentDate().formalDate, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10, renew: 3, resend: 2, wrong_shape: 5 },
-        { id: 7, formal_date: getCurrentDate().formalDate, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10, renew: 3, resend: 2, wrong_shape: 5 },
-        { id: 8, formal_date: getCurrentDate().formalDate, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10, renew: 3, resend: 2, wrong_shape: 5 },
-        { id: 9, formal_date: getCurrentDate().formalDate, date: getCurrentDate().date, total_set: 8, total: 40, total_ok: 30, total_ng: 10, renew: 3, resend: 2, wrong_shape: 5 },
-    ];
-
-
-
 
 
     const classes = useStyles();
@@ -106,33 +87,30 @@ export default function SelectCondition(props) {
         end_date: null
     })
 
-    const getFunc = async ()=>{
+    const getFunc = async () => {
         await db.collection("records").where("pid", "==", parseInt(query.id)).get().then((q) => {
             let state = []
-            console.log("=====>", query.id)
+            // console.log("=====>", query.id)
             q.forEach((doc) => {
-                console.log(doc.id, " => ", doc.data())
+                // console.log(doc.id, " => ", doc.data())
                 state.push(doc.data())
             })
 
-            console.log("state from retreive >")
-            console.log(state)
+            // console.log("state from retreive >")
+            // console.log(state)
             setData(state)
             setDisplayData(state)
         })
 
     }
 
-    const deleteFunc = async  (id,last,callback) =>{
-        // console.log("id = ", id)
-        console.log(">",last)
-        await db.collection("records").doc(id).delete().then(()=>{
-            if(last){
+    const deleteFunc = async (id, last, callback) => {
+        await db.collection("records").doc(id).delete().then(() => {
+            if (last) {
                 callback()
             }
-            console.log(" ---------- Delete finished!! -------------")
         })
-    }   
+    }
 
 
     useEffect(() => {
@@ -141,19 +119,17 @@ export default function SelectCondition(props) {
         let temp_data = data
         let result = []
         if (filterDate.begin_date) {
-            console.log(" begin_date raw > ", filterDate.begin_date)
-            console.log(" typeof > ", typeof filterDate.begin_date)
             begin_date = new Date(filterDate.begin_date)
         }
         if (filterDate.end_date) {
 
             end_date = new Date(filterDate.end_date)
         }
-        console.log("> begin_date :", begin_date)
-        console.log("> end_date : ", end_date)
+        // console.log("> begin_date :", begin_date)
+        // console.log("> end_date : ", end_date)
         result = temp_data.filter((e) => {
             const current_date = new Date(e.qc_date)
-            console.log(current_date)
+            // console.log(current_date)
             if (begin_date == undefined && !(end_date == undefined)) {
                 return current_date <= end_date
             } else if (!(begin_date == undefined) && end_date == undefined) {
@@ -172,35 +148,16 @@ export default function SelectCondition(props) {
 
     // Retreive data 
     useEffect(async () => {
-
-
-
         await getFunc()
-        // await db.collection("records").where("pid", "==", parseInt(query.id)).get().then((q) => {
-        //     let state = []
-        //     console.log("=====>", query.id)
-        //     q.forEach((doc) => {
-        //         console.log(doc.id, " => ", doc.data())
-        //         state.push(doc.data())
-        //     })
-
-        //     console.log("state from retreive >")
-        //     console.log(state)
-        //     setData(state)
-        //     setDisplayData(state)
-        // })
-
-
-
     }, [query?.id])
 
 
     return (
         <>
             <TopBar>
-                <BackButton color={THEME.primary} onClick={() => { console.log("Go back!!") }} />
+                <BackButton color={THEME.primary} />
                 <AddButton variant="contained" color="primary" onClick={() => {
-                    console.log("Add Record!!");
+                    // console.log("Add Record!!");
                     setDialogOpen(true);
                 }} >
                     <AddRoundedIcon style={{ fontSize: 32 }} /> <span style={{ marginLeft: 4 }}>เพิ่มตารางบันทึก</span>
@@ -256,19 +213,13 @@ export default function SelectCondition(props) {
                     <SelectedAlert InputProps={{ message: classes.message }} icon={false} severity="error" style={{ marginTop: 20 }}>
                         <div>{selectedData?.rows?.length}&nbsp; รายการที่เลือกอยู่</div>
                         <IconButton onClick={async () => {
-                            console.log(selectedData.rows)
-                            
-
+                            // console.log(selectedData.rows)
                             let i = 0
                             selectedData.rows.forEach((e) => {
                                 i++
-                                deleteFunc(e.id, ( i==selectedData.rows.length), getFunc )
+                                deleteFunc(e.id, (i == selectedData.rows.length), getFunc)
                             })
-                            
-
-
-
-                            console.log("Attempt delete record on selected row")
+                            // console.log("Attempt delete record on selected row")
                         }}>
                             <DeleteOutlinedIcon color="error" />
                         </IconButton>
@@ -287,7 +238,41 @@ export default function SelectCondition(props) {
                     <DialogTitle id="alert-dialog-title">คุณต้องการที่จะเพิ่มตารางบันทึกใช่หรือไม่?</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="Adding Record">
-                            เพิ่มตารางบันทึก
+                            <Button variant="contained" color="primary" onClick={() => {
+
+                                const ref = db.collection("records").doc()
+                                const curDate = new Date();
+                                const qc_id = parseInt(ref.id,10)
+                                const date = (curDate.getFullYear() + "-" +
+                                    (curDate.getMonth() + 1) + "-" +
+                                    curDate.getDate())
+
+                                ref.set({
+                                    id: ref.id,
+                                    pid: query?.id,
+                                    qc_blended_frame: 0,
+                                    qc_date: date,
+                                    qc_id: qc_id,
+                                    qc_ng_renew: 0,
+                                    qc_ng_resend: 0,
+                                    qc_total_ng: 0,
+                                    qc_total_ok: 0,
+                                    qc_total_set: 0,
+
+                                })
+                                router.push({
+                                    pathname: "/selectProductCondition/condition",
+                                    query: {
+                                        pid: query.id ?? "",
+                                        name: query.name ?? "",
+                                        date: date,
+                                        qc_id: qc_id,
+                                        id: ref.id,
+                                    }
+                                })
+
+                            }}>เพิ่ม</Button>
+                            <Button varaint="contained" onClick={() => { setDialogOpen(false) }}>ยกเลิก</Button>
                         </DialogContentText>
                     </DialogContent>
                 </Dialog>

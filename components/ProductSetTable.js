@@ -19,16 +19,18 @@ const rows = [
 ];
 
 
-export default function ProductTable() {
+export default function ProductTable(props) {
     const router = useRouter();
     const query = router.query;
-    const columns = [
-        { field: 'id', headerName: 'ชุดที่', width: 100 },
-        { field: 'per_set', headerName: 'จำนวนต่อชุด', width: 120 },
-        { field: 'machine', headerName: 'บ่อชุบ', width: 100 },
+    const { data } = props; 
 
-        { field: 'line_id', headerName: 'เลขไลน์', width: 100 },
-        { field: 'bar_id', headerName: 'เลขบาร์', width: 100 },
+    const columns = [
+        { field: 'order_no', headerName: 'ชุดที่', width: 100 },
+        { field: 'info_amount_per_set', headerName: 'จำนวนต่อชุด', width: 120 },
+        { field: 'info_tank', headerName: 'บ่อชุบ', width: 100 },
+
+        { field: 'info_production_line', headerName: 'เลขไลน์', width: 100 },
+        { field: 'info_bar_no', headerName: 'เลขบาร์', width: 100 },
         
         
         
@@ -37,7 +39,7 @@ export default function ProductTable() {
 
         { field: 'renew', headerName: 'ล้างชุบใหม่', width: 100 },
         { field: 'resend', headerName: 'ล้างส่งคืน', width: 100 },
-        { field: 'wrong_shape', headerName: 'งานผิดรูป', width: 100 },
+        { field: 'blended', headerName: 'งานผิดรูป', width: 100 },
 
         { field: 'time', headerName: 'เวลา', width: 100 },
         {
@@ -62,11 +64,11 @@ export default function ProductTable() {
                 }
         }}
          autoHeight 
-         rows={rows} 
+         rows={data ?? []} 
          columns={columns} 
          pageSize={5} 
          rowsPerPageOptions={[1,2,5,10,15]}
-         onSelectionChange={(el) => { console.log(el) }} 
+         
          />
         </div>
     )

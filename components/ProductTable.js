@@ -29,7 +29,8 @@ export default function ProductTable(props) {
                 <DataGrid
                     disableSelectionOnClick
                     onCellClick={(el) => {
-                    router.push({ pathname: "/selectProductCondition/condition", query: { ...el.data, name: product?.name, pid: product?.pid, method: "edit" } })
+                    // console.log("el > ",el.data)
+                    router.push({ pathname: "/selectProductCondition/condition", query: { ...el.data,name: product?.name, method: "edit" } })
                 }}
                     autoHeight
                     rows={data}
