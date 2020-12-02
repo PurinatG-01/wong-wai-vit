@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { Alert, AlertTitle } from '@material-ui/lab';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { getCurrentDate, extractData } from "./utils"
+import Grid from '@material-ui/core/Grid'
 import Firebase from "./Firebase"
 
 // Local css for date field and alert
@@ -275,6 +276,16 @@ export default function SelectCondition(props) {
                 </Dialog>
 
             </TableWrapper>
+            <Grid container justify="flex-end">
+                <Button variant="contained" color="primary" onClick={() => {
+                        // console.log("Add Record!!");
+                        router.push({
+                            pathname: "/showSummary/summary"
+                        })
+                    }} >
+                    <span>สรุป</span>
+                </Button>
+            </Grid>
         </>
     )
 }
