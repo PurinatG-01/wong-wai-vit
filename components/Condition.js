@@ -36,7 +36,7 @@ export default function SelectConditionForm() {
 
     const router = useRouter();
     const query = router.query;
-    const [date, setDate] = useState("")
+    const [date, setDate] = useState(query.qc_date)
     const [state, setState] = useState([])
 
     const [displayState, setDisplayState] = useState([])
@@ -44,7 +44,7 @@ export default function SelectConditionForm() {
     // console.log("condition query > ", query)
 
     const getFunc = async () => {
-        await db.collection("information").where("qc_id", "==", parseInt(query?.qc_id)).get().then((q) => {
+        await db.collection("information").where("qc_id", "==", query?.qc_id).get().then((q) => {
             let t_state = []
             // console.log("=====>", query.qc_id)
             q.forEach((doc) => {
@@ -159,7 +159,7 @@ export default function SelectConditionForm() {
                 <Typography style={{ fontSize: 24, color: THEME.black }} color="primary">
                     วันที่ :  {date ?? ""}
                 </Typography>
-                <ProductSetTable data={displayState} />
+                <ProductSetTable detailData={state} data={displayState} />
             </TableWrapper>
         </>
     )

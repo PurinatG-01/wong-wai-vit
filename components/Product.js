@@ -242,17 +242,14 @@ export default function SelectCondition(props) {
 
                                 const ref = db.collection("records").doc()
                                 const curDate = new Date();
-                                const qc_id = parseInt(ref.id,10)
-                                const date = (curDate.getFullYear() + "-" +
-                                    (curDate.getMonth() + 1) + "-" +
-                                    curDate.getDate())
+                                const date = curDate.toISOString().substring(0,10)
 
                                 ref.set({
                                     id: ref.id,
-                                    pid: query?.id,
+                                    pid: parseInt(query?.id),
                                     qc_blended_frame: 0,
                                     qc_date: date,
-                                    qc_id: qc_id,
+                                    qc_id: ref.id,
                                     qc_ng_renew: 0,
                                     qc_ng_resend: 0,
                                     qc_total_ng: 0,
@@ -263,10 +260,10 @@ export default function SelectCondition(props) {
                                 router.push({
                                     pathname: "/selectProductCondition/condition",
                                     query: {
-                                        pid: query.id ?? "",
+                                        pid: parseInt(query.id),
                                         name: query.name ?? "",
-                                        date: date,
-                                        qc_id: qc_id,
+                                        qc_date: date,
+                                        qc_id: ref.id,
                                         id: ref.id,
                                     }
                                 })

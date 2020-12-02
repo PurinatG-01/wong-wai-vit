@@ -57,9 +57,22 @@ export default function ProductTable(props) {
 
     return (
         <div style={{ height: 400, width: "100%", marginTop: 32 }}>
-            <DataGrid disableSelectionOnClick onCellClick={(el)=>{
+            <DataGrid sortModel={
+                [
+                    {
+                      field: 'order_no',
+                      sort: 'asc',
+                    },
+                  ]
+            } 
+            disableSelectionOnClick 
+            onCellClick={(el)=>{
                 if(el.field == "edit"){
                     const data = el.data
+                    
+                    // console.log("Found > ",detailData.find((obj)=>(obj.id == data.id)))
+                    // console.log("detailData > ",detailData)
+                    // console.log("el.data > ", el.data)
                     router.push({pathname:"/selectProductCondition/record",query:{ ...data ,name : query.name,  pid: query.pid, formal_date: query.formal_date ,method: "edit"}})
                 }
         }}
