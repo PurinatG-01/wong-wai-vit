@@ -242,8 +242,8 @@ export default function SelectCondition(props) {
                             <Button variant="contained" color="primary" onClick={() => {
 
                                 const ref = db.collection("records").doc()
-                                const curDate = new Date();
-                                const date = curDate.toISOString().substring(0,10)
+                                const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+                                const date = (new Date(Date.now() - tzoffset)).toISOString().substring(0,10);
 
                                 ref.set({
                                     id: ref.id,
