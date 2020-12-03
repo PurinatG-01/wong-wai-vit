@@ -34,7 +34,21 @@ export default function GridCard({data}) {
 
     const router = useRouter();
     const classes = useStyles();
+    const [products, setProducts] = useState(data);
     
+    console.log(products)
+
+    const searchProduct = (name) => {
+        setProducts(data.filter((product) => {
+            if(product.name.toLowerCase().includes(name)) {
+                return true
+            }
+            if(product.id.includes(name)) {
+                return true
+            }
+            return false
+        }))
+    }
 
     return (
         <>
@@ -51,11 +65,12 @@ export default function GridCard({data}) {
                             </InputAdornment>
                         )
                         }}
+                        onChange={(e) => {searchProduct(e.target.value)}}
                     />
                     <AddButton variant="contained" color="primary" onClick={() => { router.push("/addProduct") }} ><AddRoundedIcon style={{fontSize: 32}}/> <span style={{marginLeft: 6}}>เพิ่มรายการ</span></AddButton>
             </TopBar>
             <Grid container spacing={4} className={classes.gridSpace}>
-                {data.map((element) => (
+                {products.map((element) => (
                     <Grid key={element.id} item xs={12} sm={6} md={4}>
                         <Card data={element} onClick={()=>{
                             console.log(element);
