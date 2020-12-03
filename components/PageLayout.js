@@ -1,6 +1,8 @@
 import React from 'react'
 import Head from 'next/head'
 
+import { useRouter } from 'next/router'
+
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import { THEME } from './theme'
 import styled from 'styled-components'
@@ -12,6 +14,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button'
 
 // Main theme
 const theme = createMuiTheme({
@@ -51,6 +54,7 @@ const MainContainer = styled(Container)`
 `
 
 export default function PageLayout(props) {
+    const router = useRouter()
     return (
         <MuiThemeProvider theme={theme}>
             <Head>
@@ -67,6 +71,7 @@ export default function PageLayout(props) {
                         <Typography  style={{ fontSize: 18}}>
                             วันที่ {getCurrentDate().formalDate}
                         </Typography>
+                        <Button variant="outlined" size="small" color="secondary" onClick={() => router.push("/showSummary")}>View Summary</Button>
                     </Container>
                 </Toolbar>
             </AppBar>
