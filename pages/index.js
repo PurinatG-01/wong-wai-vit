@@ -13,23 +13,23 @@ export default function Home({xproducts}) {
   )
 }
 
-export async function getStaticProps() {
-  // Call an external API endpoint to get posts.
-  // You can use any data fetching library
-  let xproducts = []
-  await db.collection("products").get().then((query) => {
-      query.forEach((doc) => {
-          xproducts.push(doc.data()) //get document datas (all fields data)
-          console.log(doc.id) //get document id
-      })
-  })
+// export async function getStaticProps() {
+//   // Call an external API endpoint to get posts.
+//   // You can use any data fetching library
+//   let xproducts = []
+//   await db.collection("products").get().then((query) => {
+//       query.forEach((doc) => {
+//           xproducts.push(doc.data()) //get document datas (all fields data)
+//           console.log(doc.id) //get document id
+//       })
+//   })
 
-  // By returning { props: posts }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      xproducts,
-    },
-    revalidate: 1
-  }
-}
+//   // By returning { props: posts }, the Blog component
+//   // will receive `posts` as a prop at build time
+//   return {
+//     props: {
+//       xproducts,
+//     },
+//     revalidate: 1
+//   }
+// }

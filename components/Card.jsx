@@ -79,7 +79,7 @@ export default function SimpleCard(props) {
         const db = Firebase.firestore()
         db.collection("products").doc(selectedItem.id).delete().then(function() {
             console.log("Document successfully deleted!");
-            router.push("/");
+            router.reload()
         }).catch(function(error) {
             console.error("Error removing document: ", error);
         });

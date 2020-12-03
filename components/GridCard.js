@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from "./Card";
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from "@material-ui/core";
@@ -10,6 +10,9 @@ import { useRouter } from 'next/router'
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
+import Firebase from '../components/Firebase'
+
+const db = Firebase.firestore()
 
 const useStyles = makeStyles({
     gridSpace: {
@@ -34,9 +37,20 @@ export default function GridCard({data}) {
 
     const router = useRouter();
     const classes = useStyles();
-    const [products, setProducts] = useState(data);
+    const [products, setProducts] = useState([]);
     
     console.log(products)
+
+    useEffect(async () => {
+        let xproducts = []
+        await db.collection("products").get().then((query) => {
+            query.forEach((doc) => {
+                xproducts.push(doc.data()) //get document datas (all fields data)
+                console.log(doc.id) //get document id
+            })
+        })
+        setProducts(xproducts)
+    }, [])
 
     const searchProduct = (name) => {
         setProducts(data.filter((product) => {
