@@ -34,14 +34,14 @@ export default function ProductTable(props) {
         
         
         
-        { field: 'ok', headerName: 'ของที่ใช้ได้', width: 100 },
-        { field: 'ng', headerName: 'ของเสีย', width: 100 },
+        { field: 'info_total_ok', headerName: 'ของที่ใช้ได้', width: 100 },
+        { field: 'info_total_ng', headerName: 'ของเสีย', width: 100 },
 
-        { field: 'renew', headerName: 'ล้างชุบใหม่', width: 100 },
-        { field: 'resend', headerName: 'ล้างส่งคืน', width: 100 },
-        { field: 'blended', headerName: 'งานผิดรูป', width: 100 },
+        { field: 'info_ng_renew', headerName: 'ล้างชุบใหม่', width: 100 },
+        { field: 'info_ng_resend', headerName: 'ล้างส่งคืน', width: 100 },
+        { field: 'info_df_blended', headerName: 'งานผิดรูป', width: 100 },
 
-        { field: 'time', headerName: 'เวลา', width: 100 },
+        { field: 'info_starttime', headerName: 'เวลา', width: 100 },
         {
             field: 'edit', headerName: 'แก้ไข', width: 100, renderCell: (params) => (
                 <IconButton onClick={(e) => {
@@ -73,7 +73,7 @@ export default function ProductTable(props) {
                     // console.log("Found > ",detailData.find((obj)=>(obj.id == data.id)))
                     // console.log("detailData > ",detailData)
                     // console.log("el.data > ", el.data)
-                    router.push({pathname:"/selectProductCondition/record",query:{ ...data ,name : query.name,  pid: query.pid, formal_date: query.formal_date ,method: "edit"}})
+                    router.push({pathname:"/selectProductCondition/record",query:{ ...data ,name : query.name,  pid: query.pid, date: query.qc_date ,method: "edit"}})
                 }
         }}
          autoHeight 

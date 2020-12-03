@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Button, Radio, RadioGroup, FormControlLabel, FormControl, TextField, Typography } from "@material-ui/core"
 import styled from "styled-components"
 import { useRouter } from "next/router"
-import { extractData, extractNumberData } from "./utils"
+import { extractData, extractNumberData, extractStateToDbState } from "./utils"
 import Firebase from "./Firebase"
+
 
 const FormWrapper = styled.div`
 width: 100%;
@@ -61,7 +62,7 @@ export default function SelectConditionForm(props) {
 
 
 
-    // console.log("Page query : ", query)
+    console.log("Page query : ", query)
 
 
 
@@ -77,7 +78,6 @@ export default function SelectConditionForm(props) {
                 .then((q) => {
                     q.forEach((e) => {
                         console.log(e.data())
-                        
                         setState(e.data())
                     })
                 })
@@ -90,12 +90,73 @@ export default function SelectConditionForm(props) {
 
     return (
         <FormWrapper>
-            <form onSubmit={(el) => {
+            <form onSubmit={async (el) => {
                 el.preventDefault();
                 console.log("meta_state > ", state)
 
+                const DBState = extractStateToDbState(state)
+                console.log("DB state >", DBState)
+
+                await db.collection("information")
+                .doc(DBState.id)
+                .set(DBState)
+                .then((res)=>{
+                    db.collection("information")
+                    .where("qc_id", "==", DBState.qc_id)
+                    .get()
+                    .then((q)=>{
+                        let t_blended = 0
+                        let t_renew = 0
+                        let t_resend = 0
+
+                        let t_amount_per_set = 0
+                        let count_doc = 0
+
+                        q.forEach((e)=>{
+                            console.log("e >",e.data())
+                            t_blended  = t_blended + e.data().info_df_blended
+                            t_renew = t_renew + e.data().info_ng_renew
+                            t_resend = t_resend + e.data().info_ng_resend
+
+                            t_amount_per_set = t_amount_per_set + e.data().info_amount_per_set
+
+                            count_doc+=1
+
+                            console.log("t_amount > ", t_amount_per_set)
+                        })
 
 
+                        const temp = {
+                            id: DBState.qc_id,
+                            pid: DBState.pid,
+                            qc_blended_frame: t_blended,
+                            qc_date: query.date,
+                            qc_id : DBState.qc_id,
+                            qc_ng_renew: t_renew,
+                            qc_ng_resend: t_resend,
+                            qc_total_ng: (t_blended+t_resend+t_renew),
+                            qc_total_ok : (t_amount_per_set - t_blended-t_resend-t_renew),
+                            qc_total_set: count_doc,
+                        }
+
+
+                        console.log("temp >", temp)
+
+                        db.collection("records")
+                        .doc(temp.id)
+                        .set(temp)
+                        .then((res)=>{
+                            console.log("final response > ", res)
+                        })
+                        
+
+                    })
+                })
+                
+
+                
+                // router.back()
+                
 
             }}>
                 <FormControl style={{ display: "flex" }} >
@@ -121,7 +182,7 @@ export default function SelectConditionForm(props) {
                         <TextField id="info_amount_per_set"
                             style={{ width: 200 }}
                             required
-                            value={state.info_amount_per_set ?? ""}
+                            value={state.info_amount_per_set ?? 0}
                             onChange={(el) => { extractNumberData(el, state, setState) }}
                             type="number"
                             helperText="ระบุจำนวนต่อชุด" />
@@ -161,7 +222,7 @@ export default function SelectConditionForm(props) {
                         <TextField
                             id="info_bar_no"
                             style={{ width: 200 }}
-                            value={state.info_bar_no ?? ""}
+                            value={state.info_bar_no ?? 0}
                             required
                             onChange={(el) => { extractNumberData(el, state, setState) }}
                             type="number"

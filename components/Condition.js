@@ -41,14 +41,10 @@ export default function SelectConditionForm() {
 
     const [displayState, setDisplayState] = useState([])
 
-    // console.log("condition query > ", query)
-
     const getFunc = async () => {
         await db.collection("information").where("qc_id", "==", query?.qc_id).get().then((q) => {
             let t_state = []
-            // console.log("=====>", query.qc_id)
             q.forEach((doc) => {
-                console.log(doc.id, " => ", doc.data())
                 t_state.push(doc.data())
             })
 
@@ -58,55 +54,9 @@ export default function SelectConditionForm() {
             
             let display = []
             t_state.forEach((e)=>{
-                let renew = 0
-                let resend = 0
-                let blended = 0
-                console.log("-------------------")
-                console.log(e)
-                renew = renew +  ( 
-                    e.info_df_nonplating+ 
-                    e.info_df_redstain+
-                    e.info_df_silverside+
-                    e.info_df_rough+
-                    e.info_df_chemicaldrop+
-                    e.info_df_unrefinedA+
-                    e.info_df_unrefinedD+
-                    e.info_df_roughside+
-                    e.info_df_blisterchem+
-                    e.info_df_watermark
-                    )
-
-                    console.log("Test > ", e.info_df_nonplating)
-                    resend = resend +  ( 
-                        e.info_df_chemcavity+ 
-                        e.info_df_unclog+
-                        e.info_df_scratch+
-                        e.info_df_chemicalmark+
-                        e.info_df_plasticmark+
-                        e.info_df_blisterplastic+
-                        e.info_df_blisterlineplastic+
-                        e.info_df_dropconvex+
-                        e.info_df_drophole
-                        
-                    )
-
-                    blended = e.info_df_blended
-                
-
-                console.log(e.order_no+ " : "+renew, resend, blended)
+              
                 const temp_record = {
-                    id: e.id,
-                    order_no: e.order_no,
-                    info_amount_per_set : e.info_amount_per_set,
-                    info_tank : e.info_tank,
-                    info_production_line : e.info_production_line,
-                    info_bar_no : e.info_bar_no,
-                    ok: e.info_amount_per_set - (renew+resend+blended),
-                    ng: (renew+resend),
-                    renew: renew,
-                    resend: resend,
-                    blended: blended,
-                    time: e.info_starttime,
+                    ...e
                 }
 
                 display.push(temp_record)
@@ -144,7 +94,7 @@ export default function SelectConditionForm() {
                 <BackButton color={THEME.primary}></BackButton>
                 <AddButton variant="contained" color="primary" onClick={() => {
                     console.log("Add!!");
-                    router.push({ pathname: "/selectProductCondition/record", query: { pid: query.pid, name: query.name, formal_date: query.formal_date, method: "add" } })
+                    router.push({ pathname: "/selectProductCondition/record", query: { pid: query.pid, name: query.name, date: query.qc_date, method: "add" } })
                 }} >
                     <AddRoundedIcon style={{ fontSize: 32 }} /> <span style={{ marginLeft: 4 }}>เพิ่มชุด</span>
                 </AddButton>
@@ -159,7 +109,7 @@ export default function SelectConditionForm() {
                 <Typography style={{ fontSize: 24, color: THEME.black }} color="primary">
                     วันที่ :  {date ?? ""}
                 </Typography>
-                <ProductSetTable detailData={state} data={displayState} />
+                <ProductSetTable qc_date={query.qc_date} detailData={state} data={displayState} />
             </TableWrapper>
         </>
     )
