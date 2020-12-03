@@ -344,7 +344,7 @@ export default function showSummary() {
             </Grid>
             {/* Product Line: 2 */}
             <Box m={2} pt={3}>
-                <Typography variant="h5" align="left"> Product Line </Typography>
+                <Typography variant="h5" align="left"> Production Line </Typography>
                     <TableContainer component={Paper}>
                     <Table aria-label="simple table">
                         <TableHead>
