@@ -162,7 +162,7 @@ export default function SelectConditionForm(props) {
                             style={{ width: 200 }}
                             value={state.info_bar_no ?? ""}
                             required
-                            onChange={(el) => { extracNumbertData(el, state, setState) }}
+                            onChange={(el) => { extractNumbertData(el, state, setState) }}
                             type="number"
                             helperText="ระบุเลขบาร์" />
                     </InputWrapper>
