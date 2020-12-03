@@ -47,33 +47,22 @@ export default function SelectConditionForm() {
             q.forEach((doc) => {
                 t_state.push(doc.data())
             })
-
             setState(t_state)
-
-            
-            
             let display = []
-            t_state.forEach((e)=>{
-              
+            t_state.forEach((e)=>{   
                 const temp_record = {
                     ...e
                 }
-
                 display.push(temp_record)
-
             })
             setDisplayState(display)
-            
-
         })
-
     }
 
     useEffect(() => {
         var date = new Date(query?.qc_date)
         if(query.qc_date){
             setDate((date.getDate()) + "/" + (date.getMonth() + 1) + "/" + date.getFullYear())
-    
         }else{
             setDate("-/-/-")
         }
@@ -85,7 +74,6 @@ export default function SelectConditionForm() {
         if (query.qc_id) {
             await getFunc();
         }
-
     }, [query.qc_id])
 
     return (
@@ -93,8 +81,8 @@ export default function SelectConditionForm() {
             <TopBar>
                 <BackButton color={THEME.primary}></BackButton>
                 <AddButton variant="contained" color="primary" onClick={() => {
-                    console.log("Add!!");
-                    router.push({ pathname: "/selectProductCondition/record", query: { pid: query.pid, name: query.name, date: query.qc_date, method: "add" } })
+                    console.log("==>>>>Add!!");
+                    router.push({ pathname: "/selectProductCondition/record", query: { qc_id: query.qc_id, pid: query.pid, name: query.name, date: query.qc_date, method: "add" } })
                 }} >
                     <AddRoundedIcon style={{ fontSize: 32 }} /> <span style={{ marginLeft: 4 }}>เพิ่มชุด</span>
                 </AddButton>

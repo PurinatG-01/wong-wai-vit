@@ -66,7 +66,46 @@ export default function SelectConditionForm(props) {
 
 
 
-    const [state, setState] = useState(query)
+    const [state, setState] = useState((query.method == "add") ?
+        {
+            id: null,
+            info_amount_per_set: 0,
+            info_bar_no: 0,
+            info_df_blended: 0,
+            info_df_blisterchem: 0,
+            info_df_blisterlineplastic: 0,
+            info_df_blisterplastic: 0,
+            info_df_chemcavity: 0,
+            info_df_chemicaldrop: 0,
+            info_df_chemicalmark: 0,
+            info_df_dropconvex: 0,
+            info_df_drophole: 0,
+            info_df_nonplating: 0,
+            info_df_plasticmark: 0,
+            info_df_redstain: 0,
+            info_df_rough: 0,
+            info_df_roughside: 0,
+            info_df_scratch: 0,
+            info_df_silverside: 0,
+            info_df_unclog: 0,
+            info_df_unrefinedA: 0,
+            info_df_unrefinedD: 0,
+            info_df_watermark: 0,
+            info_id: null,
+            info_ng_renew: 0,
+            info_ng_resend: 0,
+            info_production_line: 2,
+            info_starttime: null,
+            info_tank: "SA",
+            info_total_ng: 0,
+            info_total_ok: 0,
+            note: "",
+            order_no: 0,
+            pid: parseInt(query.pid,10),
+            qc_id: query.qc_id,
+        }
+
+        : query)
 
 
     useEffect(() => {
@@ -88,23 +127,12 @@ export default function SelectConditionForm(props) {
 
     // console.log("in state >", state)
 
-    return (
-        <FormWrapper>
-            <form onSubmit={async (el) => {
-                el.preventDefault();
-                console.log("meta_state > ", state)
 
-                const DBState = extractStateToDbState(state)
-                console.log("DB state >", DBState)
-
-                await db.collection("information")
-                .doc(DBState.id)
-                .set(DBState)
-                .then((res)=>{
-                    db.collection("information")
+    const calTotal = (DBState)=>{
+        db.collection("information")
                     .where("qc_id", "==", DBState.qc_id)
                     .get()
-                    .then((q)=>{
+                    .then((q) => {
                         let t_blended = 0
                         let t_renew = 0
                         let t_resend = 0
@@ -112,15 +140,15 @@ export default function SelectConditionForm(props) {
                         let t_amount_per_set = 0
                         let count_doc = 0
 
-                        q.forEach((e)=>{
-                            console.log("e >",e.data())
-                            t_blended  = t_blended + e.data().info_df_blended
+                        q.forEach((e) => {
+                            console.log("e >", e.data())
+                            t_blended = t_blended + e.data().info_df_blended
                             t_renew = t_renew + e.data().info_ng_renew
                             t_resend = t_resend + e.data().info_ng_resend
 
                             t_amount_per_set = t_amount_per_set + e.data().info_amount_per_set
 
-                            count_doc+=1
+                            count_doc += 1
 
                             console.log("t_amount > ", t_amount_per_set)
                         })
@@ -131,11 +159,11 @@ export default function SelectConditionForm(props) {
                             pid: DBState.pid,
                             qc_blended_frame: t_blended,
                             qc_date: query.date,
-                            qc_id : DBState.qc_id,
+                            qc_id: DBState.qc_id,
                             qc_ng_renew: t_renew,
                             qc_ng_resend: t_resend,
-                            qc_total_ng: (t_blended+t_resend+t_renew),
-                            qc_total_ok : (t_amount_per_set - t_blended-t_resend-t_renew),
+                            qc_total_ng: (t_blended + t_resend + t_renew),
+                            qc_total_ok: (t_amount_per_set - t_blended - t_resend - t_renew),
                             qc_total_set: count_doc,
                         }
 
@@ -143,20 +171,75 @@ export default function SelectConditionForm(props) {
                         console.log("temp >", temp)
 
                         db.collection("records")
-                        .doc(temp.id)
-                        .set(temp)
-                        .then((res)=>{
-                            console.log("final response > ", res)
-                        })
-                        
+                            .doc(temp.id)
+                            .set(temp)
+                            .then((res) => {
+                                console.log("final response > ", res)
+                                router.back()
+                            })
+
 
                     })
-                })
-                
+    }
 
-                
+    const addSubmit = async (DBState) => {
+        console.log("add state >", DBState)
+        db.collection("information")
+            .where("qc_id", "==", DBState.qc_id)
+            .get()
+            .then(async (e) => {
+                const length = e.size + 1
+                // console.log("Total info in one qc_id > ", length)
+                const newRef = db.collection("information").doc()
+                await newRef.set({
+                    ...DBState,
+                    qc_id: DBState.qc_id,
+                    id: newRef.id,
+                    info_id: newRef.id,
+                    order_no: length,
+                }).then(()=>{
+
+                    calTotal(DBState)
+
+                })
+
+        })
+
+
+
+
+    }
+
+
+    const editSubmit = async (DBState) => {
+        await db.collection("information")
+            .doc(DBState.id)
+            .set(DBState)
+            .then((res) => {
+               calTotal(DBState)
+            })
+
+    }
+
+    return (
+        <FormWrapper>
+            <form onSubmit={async (el) => {
+                el.preventDefault();
+                console.log("meta_state > ", state)
+
+                const DBState = extractStateToDbState(state)
+                console.log("DB state >", DBState)
+
+                if (query.method == "add") {
+                    addSubmit(DBState)
+                } else {
+                    editSubmit(DBState)
+                }
+
+
+
                 // router.back()
-                
+
 
             }}>
                 <FormControl style={{ display: "flex" }} >
@@ -212,9 +295,9 @@ export default function SelectConditionForm(props) {
                             name="info_production_line"
                             required
                             value={state.info_production_line ?? 2}
-                            onChange={(el) => {extractNumberData(el, state, setState) }}>
-                            <FormControlLabel value={2}control={<Radio id="info_production_line" color="primary" />} label="2" />
-                            <FormControlLabel value={3}control={<Radio id="info_production_line" color="primary" />} label="3" />
+                            onChange={(el) => { extractNumberData(el, state, setState) }}>
+                            <FormControlLabel value={2} control={<Radio id="info_production_line" color="primary" />} label="2" />
+                            <FormControlLabel value={3} control={<Radio id="info_production_line" color="primary" />} label="3" />
                         </RadioGroup>
                     </InputWrapper>
                     <InputWrapper>

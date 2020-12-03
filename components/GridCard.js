@@ -7,6 +7,9 @@ import { motion } from "framer-motion"
 import { Typography, Button} from "@material-ui/core"
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
 import { useRouter } from 'next/router'
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles({
     gridSpace: {
@@ -37,6 +40,18 @@ export default function GridCard({data}) {
         <>
             <TopBar>
                     <Typography variant="h3">รายการทั้งหมด</Typography>
+                    <TextField
+                        id="search"
+                        margin="normal"
+                        size='medium'
+                        InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="start">
+                            <SearchIcon />
+                            </InputAdornment>
+                        )
+                        }}
+                    />
                     <AddButton variant="contained" color="primary" onClick={() => { router.push("/addProduct") }} ><AddRoundedIcon style={{fontSize: 32}}/> <span style={{marginLeft: 6}}>เพิ่มรายการ</span></AddButton>
             </TopBar>
             <Grid container spacing={4} className={classes.gridSpace}>
