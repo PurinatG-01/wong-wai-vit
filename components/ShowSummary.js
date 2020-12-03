@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import Firebase from "./Firebase"
+
 // Material UI
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid'
@@ -20,6 +22,8 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import styled from "styled-components"
 import { motion } from "framer-motion"
 
+const db = Firebase.firestore()
+
 
 const TopBar = styled(motion.div)`
     display: flex;
@@ -28,7 +32,23 @@ const TopBar = styled(motion.div)`
     width: 100%;
 `
 
-const allData = {
+const getSummaryData = async () => {
+    let ok = 0
+    let ng = 0
+    await db.collection("records")
+    .get()
+    .then((q) => {
+        q.forEach((record) => {
+            //console.log(record.data().qc_total_ok)
+            ok += record.data().qc_total_ok
+            ng += record.data().qc_total_ng
+        })
+    })
+    console.log([ok, ng])
+    return [ok, ng]
+}
+
+let allData = {
     labels: ['ของที่ใช้ได้ทั้งหมด', 'ของเสียทั้งหมด'],
     datasets: [
       {
@@ -36,10 +56,10 @@ const allData = {
           '#36a3eb',
           'red'
         ],
-        data: [65, 59]
+        data: [0,0]
       }
     ]
-  }
+}
 
 const dataSeparate = {
     labels: ['ล้างชุบใหม่', 'ล้างส่งคืน', 'งานผิดรูป'],
@@ -66,6 +86,12 @@ const rows = [
 ];
 
 export default function showSummary() {
+    const [countItems, setCountItems] = useState();
+
+    useEffect(() => {
+        getSummaryData().then((res) => {allData.datasets[0].data = res; setCountItems(res[0]+res[1])})
+    })
+
     return (
         <>
             <TopBar>
@@ -100,7 +126,7 @@ export default function showSummary() {
                         }}
                     />
                     <Box m={2} pt={3}>
-                        <Typography variant="h5" align="center"> ทั้งหมด X ชิ้น </Typography>
+                        <Typography variant="h5" align="center"> ทั้งหมด {countItems} ชิ้น </Typography>
                     </Box>
                 </Grid>
                 <Grid item xs ={6} >
