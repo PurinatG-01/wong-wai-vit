@@ -38,13 +38,14 @@ const defaultErrorState =
         customer: false,
     }
 
-export default function EditForm() {
+export default function EditForm(props) {
 
 
+    const { queryData } = props
     //console.log(productData)
 
     const router = useRouter();
-    const [state, setState] = useState({})
+    const [state, setState] = useState(queryData ?? {})
     const [originalId, setOriginalId] = useState()
     const [open, setOpen] = useState(false);
     const [errorState, setErrorState] = useState(defaultErrorState);
