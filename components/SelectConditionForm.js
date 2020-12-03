@@ -77,6 +77,7 @@ export default function SelectConditionForm(props) {
                 .then((q) => {
                     q.forEach((e) => {
                         console.log(e.data())
+                        
                         setState(e.data())
                     })
                 })
@@ -85,7 +86,7 @@ export default function SelectConditionForm(props) {
 
     }, [])
 
-    console.log("in state >", state)
+    // console.log("in state >", state)
 
     return (
         <FormWrapper>
@@ -135,10 +136,10 @@ export default function SelectConditionForm(props) {
                             required
                             value={state.info_tank ?? "SA"}
                             onChange={(el) => { extractData(el, state, setState) }}>
-                            <FormControlLabel value="SA" control={<Radio id="machine" color="primary" />} label="SA" />
-                            <FormControlLabel value="SB" control={<Radio id="machine" color="primary" />} label="SB" />
-                            <FormControlLabel value="B1" control={<Radio id="machine" color="primary" />} label="B1" />
-                            <FormControlLabel value="B2" control={<Radio id="machine" color="primary" />} label="B2" />
+                            <FormControlLabel value="SA" control={<Radio id="info_tank" color="primary" />} label="SA" />
+                            <FormControlLabel value="SB" control={<Radio id="info_tank" color="primary" />} label="SB" />
+                            <FormControlLabel value="B1" control={<Radio id="info_tank" color="primary" />} label="B1" />
+                            <FormControlLabel value="B2" control={<Radio id="info_tank" color="primary" />} label="B2" />
                         </RadioGroup>
                     </InputWrapper>
                     <InputWrapper>
@@ -149,10 +150,10 @@ export default function SelectConditionForm(props) {
                             aria-label="info_production_line"
                             name="info_production_line"
                             required
-                            value={state.info_production_line ?? "2"}
-                            onChange={(el) => { extractNumberData(el, state, setState) }}>
-                            <FormControlLabel value="2" control={<Radio id="line_id" color="primary" />} label="2" />
-                            <FormControlLabel value="3" control={<Radio id="line_id" color="primary" />} label="3" />
+                            value={state.info_production_line ?? 2}
+                            onChange={(el) => {extractNumberData(el, state, setState) }}>
+                            <FormControlLabel value={2}control={<Radio id="info_production_line" color="primary" />} label="2" />
+                            <FormControlLabel value={3}control={<Radio id="info_production_line" color="primary" />} label="3" />
                         </RadioGroup>
                     </InputWrapper>
                     <InputWrapper>
@@ -162,7 +163,7 @@ export default function SelectConditionForm(props) {
                             style={{ width: 200 }}
                             value={state.info_bar_no ?? ""}
                             required
-                            onChange={(el) => { extractNumbertData(el, state, setState) }}
+                            onChange={(el) => { extractNumberData(el, state, setState) }}
                             type="number"
                             helperText="ระบุเลขบาร์" />
                     </InputWrapper>

@@ -38,7 +38,7 @@ export const extractNumberData = (element, data ,setFunc)=>{
 
     const id = element.target.id
     const value = element.target.value
-    console.log("parse > ",parseInt(value,10))
+    // console.log("parse > ",parseInt(value,10))
 
     setFunc({ ...data , [id] : parseInt(value,10)})
 }
