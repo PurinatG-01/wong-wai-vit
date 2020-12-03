@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Typography, Grid, Button, Modal, Backdrop, Fade } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -8,6 +8,8 @@ import { THEME } from "./theme"
 import FormLine from "./FormLine"
 import {useRouter} from "next/router"
 import Firebase from "./Firebase"
+
+const db = Firebase.firestore()
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -36,23 +38,28 @@ const defaultErrorState =
         customer: false,
     }
 
-export default function EditForm(props) {
+export default function EditForm() {
 
-    const {productData} = props
+
     //console.log(productData)
 
     const router = useRouter();
-    const [state, setState] = useState({
-        id: productData[0].id,
-        name: productData[0].name,
-        customer: productData[0].customer,
-        description: productData[0].description,
-    })
-    const [originalId, setOriginalId] = useState({id: productData[0].id})
+    const [state, setState] = useState({})
+    const [originalId, setOriginalId] = useState()
     const [open, setOpen] = useState(false);
     const [errorState, setErrorState] = useState(defaultErrorState);
     const classes = useStyles();
     const idInput = React.createRef(), nameInput = React.createRef(), customerInput = React.createRef(), batchAmountInput = React.createRef();
+
+    useEffect(async () => {
+        let productData = []
+        await db.collection("products").doc(router.query.id).get().then((doc) =>
+            productData.push(doc.data())
+        )
+        setState(productData[0])
+        setOriginalId(productData[0].id)
+        console.log("Called")
+    }, [])
 
     const handleOpen = () => {
         setOpen(true);
@@ -80,9 +87,8 @@ export default function EditForm(props) {
 
     const saveProduct = () => {
         if(validateSubmitForm()) {
-            console.log(state)
-            const db = Firebase.firestore()
-            db.collection("products").doc(originalId.id).delete().then(function() {
+            console.log(originalId)
+            db.collection("products").doc(originalId).delete().then(function() {
                 console.log("Document successfully deleted!");
                 db.collection("products").doc(state.id).set(
                     state

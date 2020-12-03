@@ -33,10 +33,11 @@ font-size: 20px;
 justify-content: flex-start;
 `
 
-export default function GridCard({data}) {
+export default function GridCard() {
 
     const router = useRouter();
     const classes = useStyles();
+    const [allProducts, setAllProducts] = useState([]);
     const [products, setProducts] = useState([]);
     
     console.log(products)
@@ -50,10 +51,11 @@ export default function GridCard({data}) {
             })
         })
         setProducts(xproducts)
+        setAllProducts(xproducts)
     }, [])
 
     const searchProduct = (name) => {
-        setProducts(data.filter((product) => {
+        setProducts(allProducts.filter((product) => {
             if(product.name.toLowerCase().includes(name)) {
                 return true
             }

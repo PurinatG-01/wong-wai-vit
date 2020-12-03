@@ -5,10 +5,10 @@ import Firebase from '../components/Firebase'
 const db = Firebase.firestore()
 
 
-export default function Home({xproducts}) {
+export default function Home() {
   return (
     <PageLayout>
-        <GridCard data={xproducts} />
+        <GridCard />
     </PageLayout>
   )
 }
