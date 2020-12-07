@@ -29,7 +29,7 @@ const db = Firebase.firestore()
 
 const TopBar = styled(motion.div)`
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-betwe;
     align-items: center;
     width: 100%;
 `
@@ -277,7 +277,7 @@ export default function showSummary() {
         <>
             <TopBar>
                 <BackButton color={THEME.primary} onClick={() => { console.log("Go back!!") }} />
-                <Typography variant="h3">สรุปรายการ</Typography>
+                <Typography style={{marginLeft: 16,}} variant="h3">สรุปรายการ</Typography>
             </TopBar>
             { /* Charts */ }
             <Grid container spacing={2}>
