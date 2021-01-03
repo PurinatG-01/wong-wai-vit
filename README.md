@@ -1,5 +1,5 @@
 
-## Getting Started
+## Wongwaivit QC department web application
 
 Semester Project from TCS379_Practical Software Engineering, ICT, Mahidol University
 Develope using React.js + Next.js
